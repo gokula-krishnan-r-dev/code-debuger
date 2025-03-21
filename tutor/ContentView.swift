@@ -8,14 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var selectedTab = 0
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView(selection: $selectedTab) {
+            JSHomeView()
+                .tabItem {
+                    Label("JavaScript", systemImage: "curlybraces")
+                }
+                .tag(0)
+            
+            PythonHomeView()
+                .tabItem {
+                    Label("Python", systemImage: "terminal")
+                }
+                .tag(1)
         }
-        .padding()
+        .edgesIgnoringSafeArea(.top)
     }
 }
 
