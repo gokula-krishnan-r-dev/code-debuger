@@ -93,20 +93,19 @@ struct PythonHomeView: View {
             if let selectedExample = viewModel.selectedExample {
                 PythonTutorialDetailView(viewModel: viewModel, example: selectedExample)
             } else {
-                Text("Select a tutorial to begin")
-                    .font(.title)
-                    .foregroundColor(.secondary)
+                if showCodeVisualizer {
+                    PythonCodeVisualizer(codeExample: selectedExample!)
+                      .edgesIgnoringSafeArea(.all)
+                      .frame(maxWidth:.infinity, maxHeight:.infinity)
+                      .presentationDetents([.large])
+                } else {
+                    Text("Select a tutorial to begin")
+                       .foregroundColor(.secondary)
+                }
             }
         }
         .navigationSplitViewStyle(.prominentDetail)
-        .sheet(isPresented: $showCodeVisualizer) {
-            if let example = selectedExample {
-                PythonCodeVisualizer(codeExample: example)
-                    .edgesIgnoringSafeArea(.all)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .presentationDetents([.large])
-            }
-        }
+
     }
     
     private func categoryColor(for category: PythonCategory) -> Color {
@@ -176,14 +175,6 @@ struct PythonCategoryTutorialListView: View {
             }
         }
         .navigationTitle(category.rawValue)
-        .sheet(isPresented: $showCodeVisualizer) {
-            if let example = selectedExample {
-             PythonCodeVisualizer(codeExample: example)
-                    .edgesIgnoringSafeArea(.all)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .presentationDetents([.large])
-            }
-        }
     }
 }
 
@@ -229,14 +220,6 @@ struct PythonTutorialListByLevelView: View {
             }
         }
         .navigationTitle("\(level.rawValue) Tutorials")
-        .sheet(isPresented: $showCodeVisualizer) {
-            if let example = selectedExample {
-     PythonCodeVisualizer(codeExample: example)
-                    .edgesIgnoringSafeArea(.all)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .presentationDetents([.large])
-            }
-        }
     }
 }
 
@@ -272,14 +255,14 @@ struct FeaturedPythonTutorialsView: View {
             .padding(.vertical)
         }
         .navigationTitle("Python Tutor")
-        .sheet(isPresented: $showCodeVisualizer) {
-            if let example = selectedExample {
-            PythonCodeVisualizer(codeExample: example)
-                    .edgesIgnoringSafeArea(.all)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .presentationDetents([.large])
-            }
-        }
+        // .sheet(isPresented: $showCodeVisualizer) {
+        //     if let example = selectedExample {
+        //     PythonCodeVisualizer(codeExample: example)
+        //             .edgesIgnoringSafeArea(.all)
+        //             .frame(maxWidth: .infinity, maxHeight: .infinity)
+        //             .presentationDetents([.large])
+        //     }
+        // }
     }
     
     private func tutorialCard(for example: PythonCodeExample) -> some View {

@@ -30,7 +30,7 @@ struct PythonCodeVisualizer: View {
     
     // Computed properties for layout
     private var splitRatio: CGFloat {
-        isFullScreen ? 1 : 1
+        isFullScreen ? 0.4 : 0.5
     }
     
     var body: some View {
