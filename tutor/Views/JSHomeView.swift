@@ -6,6 +6,7 @@ struct JSHomeView: View {
     @State private var selectedLevel: JavaScriptTutorial.Level?
     @State private var selectedExecution: JSCodeExecution?
     @State private var showExecutionPlayground = false
+    @State private var showCodeVisualizer = false
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
     var body: some View {
@@ -42,11 +43,18 @@ struct JSHomeView: View {
                 // Code execution playground
                 Section(header: Text("Playground")) {
                     Button(action: {
-                        self.selectedExecution = JSCodeExecution.allExecutions.first
-                        self.showExecutionPlayground = true
+                        self.showCodeVisualizer = true
                     }) {
                         Label("JavaScript Visualizer", systemImage: "play.circle.fill")
                             .foregroundColor(.blue)
+                    }
+                    
+                    Button(action: {
+                        self.selectedExecution = JSCodeExecution.allExecutions.first
+                        self.showExecutionPlayground = true
+                    }) {
+                        Label("Code Executor", systemImage: "terminal")
+                            .foregroundColor(.purple)
                     }
                 }
                 
@@ -86,6 +94,10 @@ struct JSHomeView: View {
                 JSCodeExecutionView(execution: execution)
                     .edgesIgnoringSafeArea(.all)
             }
+        }
+        .sheet(isPresented: $showCodeVisualizer) {
+            JSCodeVisualizerView()
+                .edgesIgnoringSafeArea(.all)
         }
     }
     
